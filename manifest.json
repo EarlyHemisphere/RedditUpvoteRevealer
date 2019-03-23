@@ -1,0 +1,23 @@
+{
+	"name": "Reddit Vote Revealer",
+	"version": "1.0",
+	"description": "Reveals the number of upvotes on Reddit posts with their upvote counts hidden by default.",
+	"manifest_version": 2,
+	"permissions": [
+		"tabs",
+		"*://reddit.com/*",
+		"activeTab",
+		"https://www.reddit.com/*",
+		"https://old.reddit.com/*"
+	],
+	"background": {
+    	"scripts": ["background.js"]
+  	},
+	"content_scripts": [
+		{
+			"matches": ["*://*.reddit.com/*"],
+			"js": ["bundle.js"],
+			"run_at": "document_end"
+		}
+	]
+}
