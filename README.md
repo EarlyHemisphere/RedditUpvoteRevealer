@@ -1,3 +1,5 @@
+Note: this repo was copied over from another because of an accidental push of sensitive info
+
 # RedditUpvoteRevealer
 A chrome extension that reveals the number of upvotes on Reddit posts with their upvote counts hidden by default.
 
