@@ -5,13 +5,15 @@
 	"manifest_version": 2,
 	"permissions": [
 		"tabs",
-		"*://reddit.com/*",
+		"*://*.reddit.com/*",
 		"activeTab",
 		"https://www.reddit.com/*",
-		"https://old.reddit.com/*"
+		"https://old.reddit.com/*",
+		"https://oauth.reddit.com/",
+		"http://localhost/"
 	],
 	"background": {
-    	"scripts": ["background.js"]
+    	"scripts": ["bgBundle.js"]
   	},
 	"content_scripts": [
 		{
@@ -19,5 +21,6 @@
 			"js": ["bundle.js"],
 			"run_at": "document_end"
 		}
-	]
+	],
+	"content_security_policy": "script-src 'self' https://oauth.reddit.com; object-src 'self'"
 }

@@ -1,14 +1,3 @@
-var snoowrap = require('snoowrap');
-var CONFIG = require('./config.json');
-var hiddenUpvoteElements;
-
-var r = new snoowrap({
-  	userAgent: CONFIG.userAgent,
-  	clientId: CONFIG.clientId,
-  	clientSecret: CONFIG.clientSecret,
-  	refreshToken: CONFIG.refreshToken
-});
-
 const url = document.getElementsByTagName("body")[0].baseURI;
 const subPos = url.indexOf('/r/') + 3;
 const subPos_end = url.indexOf('/', subPos);
@@ -26,7 +15,7 @@ function determineRedditPage() {
 }
 
 function runOnRedesign() {
-	commentsIndex = url.indexOf("comments/")
+	commentsIndex = url.indexOf("comments/");
 	if (commentsIndex === -1) {
 		var width100Elements = document.querySelectorAll("[style='max-width:100%']");
 		var postsElement = width100Elements[width100Elements.length - 1].firstChild;
@@ -36,10 +25,10 @@ function runOnRedesign() {
 		var sortTimeOption = url.substring(timeOption, url.length);
 		waitForPosts(postsElement, sortMethod, sortTimeOption);
 	} else {
-		var commentsIndex_end = commentsIndex + 9
+		var commentsIndex_end = commentsIndex + 9;
 		var nextSlashIndex = url.indexOf('/', commentsIndex_end);
 		var submissionAbbrev = url.substring(commentsIndex_end, nextSlashIndex);
-		r.getSubmission(submissionAbbrev).fetch().then(revealSubmissionUpvotes);
+		chrome.runtime.sendMessage({msg: "getSubmission", submissionAbbrev: submissionAbbrev}, revealSubmissionUpvotes);
 	}
 }
 
@@ -47,31 +36,15 @@ async function waitForPosts(postsElement, sortMethod, sortTimeOption) {
 	while (postsElement.childNodes.length < 2) {
 		await new Promise(t => setTimeout(t, 500));
 	}
-	getSubredditApiData(revealSubredditUpvotes, sortMethod, sortTimeOption);
+	getSubredditApiData(sortMethod, sortTimeOption, revealSubredditUpvotes);
 }
 
 function runOnOldDesign() {
 	console.log("old design");
 }
 
-function getSubredditApiData(func, sortMethod, sortTimeOption) {
-	switch (sortMethod) {
-		case 'hot':
-			r.getSubreddit(subreddit).getHot().then(func);
-			break;
-		case 'new':
-			r.getSubreddit(subreddit).getNew().then(func);
-			break;
-		case 'rising':
-			r.getSubreddit(subreddit).getRising().then(func);
-			break;
-		case 'top':
-			r.getSubreddit(subreddit).getTop({time: sortTimeOption}).then(func);
-			break;
-		case 'controversial':
-			r.getSubreddit(subreddit).getControversial({time: sortTimeOption}).then(func);
-			break;
-	}
+function getSubredditApiData(sortMethod, sortTimeOption, func) {
+	chrome.runtime.sendMessage({msg: "getSubredditApiData", subreddit: subreddit, sortMethod: sortMethod, sortTimeOption: sortTimeOption}, func);
 }
 
 function revealSubmissionUpvotes(submission) {
@@ -86,6 +59,7 @@ function revealSubmissionUpvotes(submission) {
 }
 
 function revealSubredditUpvotes(apiData) {
+	console.log(apiData);
 	var hiddenUpvoteElements = document.querySelectorAll("div[style='color:#1A1A1B'],div[style='color: rgb(26, 26, 27);']");
 	var numSubmissions = apiData.length < hiddenUpvoteElements.length ? apiData.length : hiddenUpvoteElements.length;
 	for(var i = 0; i < numSubmissions; i++) {
