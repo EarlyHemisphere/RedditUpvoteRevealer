@@ -28,7 +28,8 @@ chrome.runtime.onMessage.addListener(
 		if (request.msg === "getSubredditApiData") {
 			getApiData(r, request.subreddit, request.sortMethod, request.sortTimeOption, sendResponse);
 		} else if (request.msg === "getSubmission") {
-			getSubmission(r, request.subredditAbbrev, sendResponse);
+			console.log(request.submissionAbbrev);
+			getSubmission(r, request.submissionAbbrev, sendResponse);
 		}
 		
 		return true;
@@ -54,6 +55,6 @@ function getApiData(r, subreddit, sortMethod, sortTimeOption, func) {
 	}
 }
 
-function getSubmission(r, subredditAbbrev, func) {
-	r.getSubreddit(subredditAbbrev).fetch().then(func);
+function getSubmission(r, submissionAbbrev, func) {
+	r.getSubmission(submissionAbbrev).fetch().then(func);
 }

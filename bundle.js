@@ -60,7 +60,6 @@ function revealSubmissionUpvotes(submission) {
 }
 
 function revealSubredditUpvotes(apiData) {
-	console.log(apiData);
 	var hiddenUpvoteElements = document.querySelectorAll("div[style='color:#1A1A1B'],div[style='color: rgb(26, 26, 27);']");
 	var numSubmissions = apiData.length < hiddenUpvoteElements.length ? apiData.length : hiddenUpvoteElements.length;
 	for(var i = 0; i < numSubmissions; i++) {
