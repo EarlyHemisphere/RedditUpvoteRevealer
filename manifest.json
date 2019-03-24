@@ -17,7 +17,7 @@
 	"content_scripts": [
 		{
 			"matches": ["*://*.reddit.com/*"],
-			"js": ["bundle.js"],
+			"js": ["script.js"],
 			"run_at": "document_end"
 		}
 	]
