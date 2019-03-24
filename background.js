@@ -28,7 +28,6 @@ chrome.runtime.onMessage.addListener(
 		if (request.msg === "getSubredditApiData") {
 			getApiData(r, request.subreddit, request.sortMethod, request.sortTimeOption, sendResponse);
 		} else if (request.msg === "getSubmission") {
-			console.log(request.submissionAbbrev);
 			getSubmission(r, request.submissionAbbrev, sendResponse);
 		}
 		
