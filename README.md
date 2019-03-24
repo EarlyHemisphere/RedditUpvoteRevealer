@@ -25,3 +25,4 @@ The script is incomplete - refer to the TODO list below for features that still 
 - Work on old.reddit.com
 - ~~Work when posts are viewed on redesign~~
 - Work when posts are viewed on old design
+- Respond to post view format change on redesign
