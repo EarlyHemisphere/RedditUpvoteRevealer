@@ -1,7 +1,16 @@
-const url = document.getElementsByTagName("body")[0].baseURI;
-const subPos = url.indexOf('/r/') + 3;
-const subPos_end = url.indexOf('/', subPos);
-const subreddit = url.substring(subPos, subPos_end);
+var url = document.getElementsByTagName("body")[0].baseURI;
+var subPos = url.indexOf('/r/') + 3;
+var subPos_end = url.indexOf('/', subPos);
+var subreddit = url.substring(subPos, subPos_end);
+
+var viewObserver = new MutationObserver(mutations => {
+	determineRedditPage();
+});
+
+viewObserver.observe(document.querySelector('div[id="view--layout--FUE"]'), {
+	attributes: true,
+	subtree: true
+});
 
 determineRedditPage();
 
@@ -24,7 +33,7 @@ function runOnRedesign() {
 		var timeOption = url.indexOf('?t=') + 3;
 		var sortTimeOption = url.substring(timeOption, url.length);
 		waitForPosts(postsElement, sortMethod, sortTimeOption);
-	} else {
+	} else if (url.indexOf('/r/')) {
 		var commentsIndex_end = commentsIndex + 9;
 		var nextSlashIndex = url.indexOf('/', commentsIndex_end);
 		var submissionAbbrev = url.substring(commentsIndex_end, nextSlashIndex);
@@ -64,7 +73,7 @@ function revealSubredditUpvotes(apiData) {
 	for(var i = 0; i < numSubmissions; i++) {
 		upvoteText = hiddenUpvoteElements[i].innerText;
 		if (isNaN(upvoteText) && upvoteText.indexOf("k") === -1) {
-			scrollItem = hiddenUpvoteElements[i].parentElement.parentElement.parentElement;
+			scrollItem = hiddenUpvoteElements[i].parentElement.parentElement.parentElement.parentElement;
 			title = scrollItem.querySelector("h2").innerText;
 			hiddenUpvoteElements[i].innerText = getApiResult(title, apiData).ups;
 		}
