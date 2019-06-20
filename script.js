@@ -74,7 +74,7 @@ function revealSubredditUpvotes(apiData) {
 		upvoteText = hiddenUpvoteElements[i].innerText;
 		if (isNaN(upvoteText) && upvoteText.indexOf("k") === -1) {
 			scrollItem = hiddenUpvoteElements[i].parentElement.parentElement.parentElement.parentElement;
-			title = scrollItem.querySelector("h2").innerText;
+			title = scrollItem.querySelector("h3").innerText;
 			hiddenUpvoteElements[i].innerText = getApiResult(title, apiData).ups;
 		}
 	}
