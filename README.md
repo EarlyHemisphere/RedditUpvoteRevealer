@@ -21,9 +21,9 @@ The script is incomplete - refer to the TODO list below for features that still 
 
 - Change all posts, and not just the first ~10
 - Respond to scrolling/lazy-loading
-- ~~Update when sorting method or subreddit is updated within Reddit, and not just on direct load~~
+- Update when ~~sorting method~~ or subreddit is updated within Reddit, and not just on direct load
 - Work on old.reddit.com
-- ~~Work when posts are viewed on redesign~~
+- Work when posts are viewed on redesign
 - Work when posts are viewed on old design
-- ~~Respond to post view format change on redesign~~
+- Respond to post view format change on redesign
 - Add listener to increment/decrement revealed upvote score on upvote/downvote
